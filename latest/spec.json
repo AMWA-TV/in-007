@@ -11,18 +11,13 @@
   "show_in_index": false,
   "intro": {
     "what_does_it_do": [
-      "Provides a template for creating new AMWA Increments"
+      "x"
     ],
     "why_does_it_matter": [
-      "AMWA Increments (IN-xxx) record incremental outputs of AMWA activity phases",
-      "They may stand on their own or be referenced by other documents, such as the NMOS specifications",
-      "This template helps ensure consistency between Increments.",
-      "It also helps us test our continuous integration."
+      "x"
     ],
     "how_does_it_work": [
-      "It contains [examples of documentation](docs/Overview.md) useful in AMWA Increments",
-      "It provides a style guide and other advice for authors",
-      "Select `AMWA-TV/in-007` as the template when creating the new repo"
+      "x"
     ]
   }
 }
