@@ -26,7 +26,7 @@ jobs:
     with:
       versioned: false
       site-name: ${{ github.event.repository.name }}
-      public-docs-root: https://specs.amwa.tv/in-template
+      public-docs-root: ${{ format('https://specs.amwa.tv/{0}', github.event.repository.name) }}
       legacy-mapping: .docs/legacy-mappings.csv
       upload-prefix: ''
       source-ref: ${{ inputs.ref || github.ref_name }}

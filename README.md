@@ -1,4 +1,4 @@
-# \[Work In Progress\] AMWA IN-007: DMF Security: Assets & Requirements\n
+# \[Work In Progress\] AMWA IN-007: DMF Security: Assets & Requirements
 [![Lint Status](https://github.com/AMWA-TV/in-007/actions/workflows/lint.yml/badge.svg)](https://github.com/AMWA-TV/in-007/actions/workflows/lint.yml)
 [![Zensical Render Status](https://github.com/AMWA-TV/in-007/actions/workflows/docs.yml/badge.svg)](https://github.com/AMWA-TV/in-007/actions/workflows/docs.yml)
 [![License](https://img.shields.io/github/license/AMWA-TV/in-007)](https://github.com/AMWA-TV/in-007/blob/HEAD/LICENSE)
@@ -10,20 +10,14 @@ This repository holds the source of a work artifact published as an **[AMWA Incr
 
 ### What does it do?
 
-- Provides a template for creating new AMWA Increments
-
+- x
 ### Why does it matter?
 
-- AMWA Increments (IN-xxx) record incremental outputs of AMWA activity phases
-- They may stand on their own or be referenced by other documents, such as the NMOS specifications
-- This template helps ensure consistency between Increments.
-- It also helps us test our continuous integration.
+- x
 
 ### How does it work?
 
-- It contains [examples of documentation](docs/Overview.md) useful in AMWA Increments
-- It provides a style guide and other advice for authors
-- Select `AMWA-TV/in-007` as the template when creating the new repo
+- x
 
 This work artifact is published as an **AMWA Increment (IN)**. Increments are intended to make public the ongoing progress of a working group without locking decisions into a formal specification. While the technical details contained in this repository do not constitute a stable or finalized specification, readers should note that Increments are Draft Specifications as defined in the AMWA IPR Policy. The provisions of the policy apply, including the requirement for early disclosure. You can expect the content to evolve incrementally based on ongoing testing, consensus-building, and community input. Public review is encouraged! Please post an Issue to the Repo to submit questions, feedback, or propose changes.
 
