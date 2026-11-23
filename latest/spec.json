@@ -11,13 +11,19 @@
   "show_in_index": false,
   "intro": {
     "what_does_it_do": [
-      "x"
+      "Identifies the DMF components and information assets that are relevant to security.",
+      "Considers those assets in terms of confidentiality, integrity, availability, authenticity, and non-repudiation.",
+      "Proposes an initial set of security requirements for the design and operation of a DMF."
     ],
     "why_does_it_matter": [
-      "x"
+      "DMF processes media across hosts, workloads, and services, so security failures can affect media, control, and production availability.",
+      "Making security assumptions and requirements explicit gives designers, implementers, and operators a shared basis for review.",
+      "It highlights open questions, including media-payload encryption and security across multiple Clusters."
     ],
     "how_does_it_work": [
-      "x"
+      "Organises the scope around assets such as Hosts, Media Workloads, Media Functions, Domains, Flows, and Replicators.",
+      "Assesses those assets against confidentiality, integrity, availability, authenticity, and non-repudiation.",
+      "Sets out requirements covering identity and access control, configuration, logging, hardening, isolation, availability, and recovery."
     ]
   }
 }
