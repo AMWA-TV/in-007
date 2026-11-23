@@ -72,7 +72,7 @@ The first table lists assets in the reference architecture. The second lists add
 | --- | --- | --- |
 | **C** | **Confidentiality** | Preserving authorised restrictions on information access and disclosure, including protecting personal privacy and proprietary information. |
 | **I** | **Integrity** | Guarding against improper information modification or destruction, including ensuring authenticity and non-repudiation. |
-| **A** | **Availability** | Ensuring *timely*[^1] and reliable access to and use of information. |
+| **A** | **Availability** | Ensuring *timely* and reliable access to and use of information; timeliness is particularly critical for real-time media production. |
 | **A/NR** | **Authenticity** | The assurance that an entity, user, system, or data is genuine and has not been impersonated or falsified. |
 |  | **Non-repudiation** | The assurance that the origin and integrity of data or an action can be proven, preventing an individual or entity from falsely denying having performed that action. |
 
@@ -83,4 +83,3 @@ The first table lists assets in the reference architecture. The second lists add
 - The Dynamic Media Facility: Reference Architecture v2.0.
 - [MXL releases](https://github.com/dmf-mxl/mxl/releases/).
 
-[^1]: Real-time media production has stringent timing requirements; availability comes first.
