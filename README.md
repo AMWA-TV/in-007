@@ -10,14 +10,21 @@ This repository holds the source of a work artifact published as an **[AMWA Incr
 
 ### What does it do?
 
-- x
+- Identifies the DMF components and information assets that are relevant to security.
+- Considers those assets in terms of confidentiality, integrity, availability, authenticity, and non-repudiation.
+- Proposes an initial set of security requirements for the design and operation of a DMF.
+
 ### Why does it matter?
 
-- x
+- DMF processes media across hosts, workloads, and services, so security failures can affect media, control, and production availability.
+- Making security assumptions and requirements explicit gives designers, implementers, and operators a shared basis for review.
+- It highlights open questions, including media-payload encryption and security across multiple Clusters.
 
 ### How does it work?
 
-- x
+- Organises the scope around assets such as Hosts, Media Workloads, Media Functions, Domains, Flows, and Replicators.
+- Assesses those assets against confidentiality, integrity, availability, authenticity, and non-repudiation.
+- Sets out requirements covering identity and access control, configuration, logging, hardening, isolation, availability, and recovery.
 
 This work artifact is published as an **AMWA Increment (IN)**. Increments are intended to make public the ongoing progress of a working group without locking decisions into a formal specification. While the technical details contained in this repository do not constitute a stable or finalized specification, readers should note that Increments are Draft Specifications as defined in the AMWA IPR Policy. The provisions of the policy apply, including the requirement for early disclosure. You can expect the content to evolve incrementally based on ongoing testing, consensus-building, and community input. Public review is encouraged! Please post an Issue to the Repo to submit questions, feedback, or propose changes.
 
