@@ -2,82 +2,85 @@
 
 _(c) AMWA 2026, CC Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)_
 
-The Dynamic Media Facility (DMF) is primarily about Media. But as it consists of IT services and devices, security is also a matter of concern.  
-This document aims at finding out [which parts of the DMF](#system-under-consideration) are to be considered from a security perspective. Then which [assets](#assets) are to be protected according to their confidentiality ©, integrity (I) and availability (A), and as we are talking media also their state of authenticity and non-repudiation (A/NR) (see [The CIA Triad and Supporting Security Properties](#the-cia-triad-and-supporting-security-properties) for details). Finally [security requirements](#security-requirements) for the assets are defined.
+This document identifies the parts of the Dynamic Media Facility (DMF) that are relevant from a security perspective, the assets to protect, and the security requirements for those assets. It considers confidentiality (C), integrity (I), and availability (A), together with authenticity and non-repudiation (A/NR), which are especially relevant for media. See [The CIA triad and supporting security properties](#the-cia-triad-and-supporting-security-properties) for definitions.
 
-### System Under Consideration {#system-under-consideration}
+## System under consideration
 
-The system under consideration comprises assets drawn from the EBU Dynamic Media Facility (DMF) Reference Architecture v2.0, organised as follows. A production (a **Media Workload** in the reference architecture) is deployed across one or more Hosts, the machines within a Cluster that run the Container Platform. Each **Host** executes one or more **Media Functions**, stateless containerised units that perform media processing (e.g. mixing, graphics, format conversion). Media Functions are granted access to **Domains**, which scope which Media Functions are authorised to access a given media Flow. Within a Domain, **Flows** carry the actual timestamped media payloads (Grains) between authorised Media Functions. **Replicators** are the components responsible for propagating Flows between Nodes in a Cluster.
+The system under consideration comprises assets drawn from the EBU Dynamic Media Facility (DMF) Reference Architecture v2.0. A production (called a **Media Workload** in the reference architecture) runs across one or more Hosts: the machines in a Cluster that run the Container Platform. Each **Host** executes one or more **Media Functions**, stateless containerised units that process media, such as mixing, graphics, or format conversion.
 
-![][image1]
+Media Functions are granted access to **Domains**, which define which Flows they may access. Within a Domain, **Flows** carry timestamped media payloads (Grains) between authorised Media Functions. **Replicators** propagate Flows between Nodes in a Cluster.
 
-Figure 1: System Under Consideration
+![System under consideration: Media Functions access Flows within Domains on two Hosts, with Replicators propagating Flows and control messages between the Hosts.](images/system-under-consideration.png)
 
-These assets operate within a stated zero-trust model built on authentication / authorisation / accounting, least-privilege access, segmentation, and continuous monitoring. The reference architecture itself flags two relevant gaps: encryption of media payloads is not yet? mandated, and security across multiple Clusters remains an open topic.
+*Figure 1 — System under consideration.*
 
-### Assets {#assets}
+The reference architecture describes a zero-trust model based on authentication, authorisation and accounting, least-privilege access, segmentation, and continuous monitoring. It leaves two security points open: whether media payloads must be encrypted, and how security should be handled across multiple Clusters.
+
+## Assets
+
+The first table lists assets in the reference architecture. The second lists additional assets assumed to be part of a future DMF.
 
 | Asset | Description | C | I | A | A/NR |
-| ----- | :---- | :---: | :---: | :---: | :---: |
-| **Host** | Hosts run an operating system and are grouped into Clusters; Kubernetes uses the specific terminology of "Nodes" for these Hosts. A **Host** executes Media Functions. | ✓ | ✓ | ✓ | ✓ |
-| **Media Workload** | A **Media Workload** consists of an organised collection of **Media Functions** and the flows that connect them, working together to transform inputs into a Media Product.  | ✓ | ✓ | ✓ | ✓ |
-| **Media Function** | A **Media Function** is a processing unit that performs a specific operation on media. A well-defined unit of functionality that acts on media (e.g. format conversion, mixing, colour correction, graphics rendering). Media Functions are stateless and are provisioned as one or more Containers.  | ✓ | ✓ | ✓ | ✓ |
-| **Domain** | The Media Exchange layer defines **Domains** as a mechanism to identify which Flows can be accessed by Media Functions.  A mechanism defined at the Media Exchange layer to identify which Flows can be accessed by which Media Functions; in the MXL SDK, a Flow is addressed by the tuple {Host ID, Domain ID, Flow ID}, uniquely identifying a directory of memory-mapped files holding Grains.  | (✓) | ✓ | ✓ | ✓ |
-| **Flow**(s) | Audio / Video / Anc \+ associated metadata transported by MXL | (✓) | ✓ | ✓ | ✓ |
-| **Replicator** | A service responsible for replicating media flows between nodes so that authorised media functions on different hosts can consume the same media. |  | ✓ | ✓ | ✓ |
-| **Assumed future Assets** |  |  |  |  |  |
-| Flow Orchestration | Management of media functions and flows Device and application configuration | ✓ | ✓ | ✓ | ✓ |
-| Production | Group of Media Workloads servicing one media production. | ✓ | ✓ | **✓** |  |
-| Control plane | Ability to control media functions, flows, ability to orchestrate, etc | ✓ | ✓ | ✓ | ✓ |
-| Exposed media services | Services with ports exposed to the outside of DMF (e.g. Media streams) |  | ✓ | ✓ | ✓ |
-| Operational Interfaces | Services communicating with external UIs and APIs |  | ✓ | ✓ | ✓ |
-| Identity | Identity and associated privileges of a (human) operator interacting with the system | ✓ | ✓ | ✓ | ✓ |
-| Logs | Security and operation records; source material for SIEM and other cyber automation tools | ✓ | ✓ | ✓ | ✓ |
+| --- | --- | :---: | :---: | :---: | :---: |
+| **Host** | Runs an operating system and is grouped into a Cluster. Kubernetes uses the term “Node” for a Host. A Host executes Media Functions. | ✓ | ✓ | ✓ | ✓ |
+| **Media Workload** | An organised collection of Media Functions and the Flows that connect them, working together to transform inputs into a Media Product. | ✓ | ✓ | ✓ | ✓ |
+| **Media Function** | A stateless processing unit that performs an operation on media, such as format conversion, mixing, colour correction, or graphics rendering. It is provisioned as one or more Containers. | ✓ | ✓ | ✓ | ✓ |
+| **Domain** | A Media Exchange layer mechanism that identifies which Flows Media Functions may access. In the MXL SDK, a Flow is addressed by the tuple {Host ID, Domain ID, Flow ID}, which uniquely identifies a directory of memory-mapped files holding Grains. | (✓) | ✓ | ✓ | ✓ |
+| **Flows** | Audio, video, ancillary data, and associated metadata transported by MXL. | (✓) | ✓ | ✓ | ✓ |
+| **Replicator** | A service that replicates media Flows between Nodes so authorised Media Functions on different Hosts can consume the same media. |  | ✓ | ✓ | ✓ |
 
-Table 1: Assets
+*Table 1 — Assets in the reference architecture.*
 
-## Security Requirements {#security-requirements}
+### Assumed future assets
 
-* Each entity in a DMF shall have a **verifiable identity.**  
-* Identities and credentials shall be centrally managed in a DMF.   
-* Authentication and authorization are centrally managed in a DMF.  
-* Flows, Domains, control, state, logs and monitoring information shall be protected against **unauthorized** access, modification and deletion.  
-* Control actions shall be **authenticated**, **authorized**, **attributable**, and protected against replay.   
-* Each Media Function shall check the **identity and authorization** of the source of requested actions  
-* Configuration changes shall be validated, **auditable**, and **reversible**.  
-* Credentials, connections, permissions, and retained data shall be **withdrawn or disposed** of when no longer required.  
-* All hardware and software hosting or supporting the DMF shall be secured and **hardened** according to the relevant best practices.  
-* High-impact operator actions shall include **safeguards against human error**.  
-* Availability, capacity, latency, timing, and recovery requirements shall be clearly defined, and limits shall be enforced.  
-* Hosts and media functions shall be protected against Denial of Service, including resource exhaustion.  
-* Failures or degradation of functionality and security-relevant changes in a DMF shall be detectable, allowing triggering automated or operator response.  
-* Required security and operational events shall be **logged**, identifying their source and relevant subject using verifiable identities. Logs shall contain sufficient context and accurate timestamps to support correlation and investigation but no sensitive information.   
-* Log collection, transport, storage, and retrieval shall meet defined availability and retention needs.  
-* Changes to logging and retention arrangements shall be authorized, validated, and auditable.  
-* Media Workload resources and relationships shall be **isolated** from other , non-related Media Workloadsproductions according to risk.  
-* Critical functions and flows shall have defined **continuity** and recovery arrangements.
+| Asset | Description | C | I | A | A/NR |
+| --- | --- | :---: | :---: | :---: | :---: |
+| Flow Orchestration | Management of Media Functions and Flows, including device and application configuration. | ✓ | ✓ | ✓ | ✓ |
+| Production | A group of Media Workloads servicing one media production. | ✓ | ✓ | **✓** |  |
+| Control plane | Ability to control Media Functions and Flows, including orchestration. | ✓ | ✓ | ✓ | ✓ |
+| Exposed media services | Services with ports exposed outside the DMF, such as media streams. |  | ✓ | ✓ | ✓ |
+| Operational interfaces | Services communicating with external user interfaces and APIs. |  | ✓ | ✓ | ✓ |
+| Identity | Identity and associated privileges of a human operator interacting with the system. | ✓ | ✓ | ✓ | ✓ |
+| Logs | Security and operational records; source material for SIEM and other cyber-automation tools. | ✓ | ✓ | ✓ | ✓ |
 
-### 
+*Table 2 — Assumed future assets.*
 
-### 
+## Security requirements
 
-### The CIA Triad and Supporting Security Properties {#the-cia-triad-and-supporting-security-properties}
+- Each entity in a DMF shall have a **verifiable identity**.
+- Identities and credentials shall be centrally managed in a DMF.
+- Authentication and authorisation shall be centrally managed in a DMF.
+- Flows, Domains, control, state, logs, and monitoring information shall be protected against **unauthorised** access, modification, and deletion.
+- Control actions shall be **authenticated**, **authorised**, **attributable**, and protected against replay.
+- Each Media Function shall check the **identity and authorisation** of the source of requested actions.
+- Configuration changes shall be validated, **auditable**, and **reversible**.
+- Credentials, connections, permissions, and retained data shall be **withdrawn or disposed of** when no longer required.
+- All hardware and software hosting or supporting the DMF shall be secured and **hardened** according to relevant best practices.
+- High-impact operator actions shall include **safeguards against human error**.
+- Availability, capacity, latency, timing, and recovery requirements shall be clearly defined, and limits shall be enforced.
+- Hosts and Media Functions shall be protected against denial-of-service attacks, including resource exhaustion.
+- Failures, degradation of functionality, and security-relevant changes in a DMF shall be detectable so that an automated or operator response can be triggered.
+- Required security and operational events shall be **logged**, identifying their source and relevant subject using verifiable identities. Logs shall contain sufficient context and accurate timestamps to support correlation and investigation, but no sensitive information.
+- Log collection, transport, storage, and retrieval shall meet defined availability and retention needs.
+- Changes to logging and retention arrangements shall be authorised, validated, and auditable.
+- Media Workload resources and relationships shall be **isolated** from other, unrelated Media Workloads and productions according to risk.
+- Critical functions and Flows shall have defined **continuity** and recovery arrangements.
 
-| \# | Property | Description |
-| :---- | :---- | :---- |
+## The CIA triad and supporting security properties
+
+| Abbreviation | Property | Description |
+| --- | --- | --- |
 | **C** | **Confidentiality** | Preserving authorised restrictions on information access and disclosure, including protecting personal privacy and proprietary information. |
 | **I** | **Integrity** | Guarding against improper information modification or destruction, including ensuring authenticity and non-repudiation. |
-| **A** | **Availability** | Ensuring *timely[^1]* and reliable access to and use of information. |
-| **A/NR**  | **Authenticity** | The assurance that an entity, user, system, or data is genuine and has not been impersonated or falsified. |
+| **A** | **Availability** | Ensuring *timely*[^1] and reliable access to and use of information. |
+| **A/NR** | **Authenticity** | The assurance that an entity, user, system, or data is genuine and has not been impersonated or falsified. |
 |  | **Non-repudiation** | The assurance that the origin and integrity of data or an action can be proven, preventing an individual or entity from falsely denying having performed that action. |
 
-Table 2: The CIA Triad and Supporting Security Properties
+*Table 3 — The CIA triad and supporting security properties.*
 
-### References
+## References
 
-* The Dynamic Media Facility: Reference Architecture v2.0  
-* https\://github.com/dmf-mxl/mxl/releases/
+- The Dynamic Media Facility: Reference Architecture v2.0.
+- [MXL releases](https://github.com/dmf-mxl/mxl/releases/).
 
-[^1]:  Real-time media production has stringent timing requirements (Availability first).
-
-[image1]: <data:image/png;base64,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>
+[^1]: Real-time media production has stringent timing requirements; availability comes first.
